@@ -88,7 +88,13 @@ echo "hello".'<br/>';
 //closedir($resource); 			//关闭文件操作句柄
 //echo '在<b>'.$dirname.'</b>目录下共有文件<b>'.$num.'</b>个';
 
-$path = "D:\\Pictures";
-echo disk_free_space($path).'<br>';
-echo disk_total_space($path).'<br>';
+//$path = "D:\\Pictures";
+//echo disk_free_space($path).'<br>';
+//echo disk_total_space($path).'<br>';
+
+$filename = "static/hello.txt";
+$handle = fopen($filename,'r') or die("文件打开失败");
+$contents = fread($handle,filesize($filename));
+fclose($handle);
+echo $contents;
 
