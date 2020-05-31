@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>blog后台管理系统</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css"></head>
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="id" required  lay-verify="required" value="{$user.id}" readonly="readonly" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">avatar</label>
+        <div class="layui-input-block">
+            <input type="text" name="avatar" required  lay-verify="required" value="{$user.avatar}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" required  lay-verify="required" value="{$user.username}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">别名</label>
+        <div class="layui-input-block">
+            <input type="text" name="nickname" required  lay-verify="required" value="{$user.nickname}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮件</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" required  lay-verify="required" autocomplete="off" value="{$user.email}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+</form>
+
+    <script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            $.ajax({
+                type: "post",
+                data: data.field,
+                url: "../user/update",
+                success: function (data) {
+                    //先得到当前iframe层的索引
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //再执行关闭
+                    parent.layer.close(index);
+                    //关闭父级页面的表格
+                    parent.layui.table.reload('table');
+                    layer.msg("修改成功");
+                }
+            });
+            // layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+    </script>
+
+</body>
+</html>
